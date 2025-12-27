@@ -25,12 +25,18 @@ def generate_random_date(
     Returns:
         datetime: Data aleatória.
     """
-    start_date = start_date or datetime(2020, 1, 1)
+    start_date = start_date or datetime(2020, 1, 1, 0, 0, 0)
     end_date = end_date or datetime.now()
-    delta = end_date - start_date
-    random_date = start_date + timedelta(random.randint(0, delta.days))
 
-    return random_date
+    delta = end_date - start_date
+    total_seconds = int(delta.total_seconds())
+
+    random_seconds = random.randint(0, total_seconds)
+
+    return start_date + timedelta(seconds=random_seconds)
+
+
+print(generate_random_date())
 
 
 # endregion
