@@ -36,7 +36,4 @@ def generate_random_date(
     return start_date + timedelta(seconds=random_seconds)
 
 
-print(generate_random_date())
-
-
 # endregion
