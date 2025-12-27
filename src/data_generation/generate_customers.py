@@ -3,7 +3,6 @@ Arquivo para a geração de dados fictícios para clientes, utilizando a API do 
 """
 
 import uuid
-import random
 import requests as r
 import polars as pl
 
@@ -13,7 +12,7 @@ from src.utils.helpers import generate_random_date
 
 # region ----- Funções -----
 # Criar dataframe com dados dos clientes utilizando RandomUer.me API
-def create_clients_data(response) -> pl.DataFrame:
+def create_customers_data(response) -> pl.DataFrame:
     """
     Cria um dataframe com os dados dos clientes.
     A API do RandomUser.me é utilizada para obter os dados dos clientes.
@@ -31,9 +30,6 @@ def create_clients_data(response) -> pl.DataFrame:
             "id": pl.Series([str(uuid.uuid4()) for x in range(len(results))]),
             "created_at": pl.Series(
                 [generate_random_date() for x in range(len(results))]
-            ),
-            "subscription_id": pl.Series(
-                [random.randint(1, 3) for x in range(len(results))]
             ),
             "first_name": pl.Series([x["name"]["first"] for x in results]),
             "last_name": pl.Series([x["name"]["last"] for x in results]),
@@ -69,6 +65,6 @@ response: dict = r.get(
 
 
 if __name__ == "__main__":
-    clients_data = create_clients_data(response)
+    customers_data = create_customers_data(response)
 
-    print(clients_data)
+    print(customers_data)
