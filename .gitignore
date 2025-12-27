@@ -9,5 +9,8 @@ wheels/
 # Virtual environments
 .venv
 
+# Env files
+.env
+
 # Resources folder
 res/
