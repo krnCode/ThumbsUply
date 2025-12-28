@@ -3,7 +3,9 @@ Arquivo com funções auxiliares utilizadas no projeto.
 """
 
 import random
+import polars as pl
 
+from io import BytesIO
 from datetime import datetime, timedelta
 
 
@@ -34,6 +36,23 @@ def generate_random_date(
     random_seconds = random.randint(0, total_seconds)
 
     return start_date + timedelta(seconds=random_seconds)
+
+
+# Converter arquivo parquet para bytes
+def convert_parquet_to_bytes(df: pl.DataFrame) -> bytes:
+    """
+    Converte um arquivo parquet para bytes.
+
+    Args:
+        file_path (str): Caminho do arquivo parquet a ser convertido.
+
+    Returns:
+        BytesIO: Bytes do arquivo parquet.
+    """
+    buffer: BytesIO = BytesIO()
+    df.write_parquet(buffer)
+
+    return buffer.getvalue()
 
 
 # endregion
