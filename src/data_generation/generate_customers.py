@@ -9,8 +9,13 @@ import os
 
 from dotenv import load_dotenv
 from datetime import datetime
-from src.utils.helpers import generate_random_date
-from src.utils.supabase_tools import create_supabase_client, update_supabase_table
+from src.utils.helpers import generate_random_date, convert_parquet_to_bytes
+from src.utils.supabase_tools import (
+    create_supabase_client,
+    update_supabase_table,
+    read_supabase_table,
+    upload_file_to_supabase,
+)
 
 
 # region ----- Carregar variáveis de ambiente -----
@@ -75,19 +80,34 @@ response: dict = r.get(
 # endregion
 
 
-if __name__ == "__main__":
-    customers_data = create_customers_data(response)
-    # Converter datas para strings para serem compatíveis com o supabase
-    customers_data = customers_data.with_columns(
-        pl.col("created_at").dt.strftime("%Y-%m-%dT%H:%M:%S")
-    )
-    # Transformar dataframe em dict para ser compatível com o supabase
-    customers_data_dict = customers_data.to_dicts()
+# if __name__ == "__main__":
+#     customers_data = create_customers_data(response)
 
-    supabase = create_supabase_client(url=SUPABASE_URL, key=SUPABASE_KEY)
-    update_supabase_table(
-        supabase_client=supabase,
-        table_name="customers",
-        data=customers_data_dict,
-    )
-    # print(customers_data)
+#     # Converter datas para strings para serem compatíveis com o supabase
+#     customers_data = customers_data.with_columns(
+#         pl.col("created_at").dt.strftime("%Y-%m-%dT%H:%M:%S")
+#     )
+
+#     # Transformar dataframe em dict para ser compatível com o supabase
+#     customers_data_dict = customers_data.to_dicts()
+
+#     supabase = create_supabase_client(url=SUPABASE_URL, key=SUPABASE_KEY)
+
+#     update_supabase_table(
+#         supabase_client=supabase,
+#         table_name="customers",
+#         data=customers_data_dict,
+#     )
+
+#     customers_data = read_supabase_table(
+#         supabase_client=supabase, table_name="customers"
+#     )
+#     customers_data = pl.DataFrame(customers_data)
+#     parquet_bytes = convert_parquet_to_bytes(df=customers_data)
+
+#     upload_file_to_supabase(
+#         supabase_client=supabase,
+#         file_name_or_path="customers_inital_load.parquet",
+#         file=parquet_bytes,
+#         bucket_name="initial_load",
+#     )
