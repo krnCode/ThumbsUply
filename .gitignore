@@ -14,3 +14,6 @@ wheels/
 
 # Resources folder
 res/
+
+# Continue.dev configurations
+*.continue
