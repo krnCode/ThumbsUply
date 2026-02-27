@@ -62,7 +62,6 @@ supabase_key = os.getenv("SUPABASE_KEY")
 #         )
 #     )
 
-#     # TODO: Finalizar a criação da tabela de snapshor de eventos
 #     # Criar tabela inicial de eventos, depois incluir os dados necessários
 #     initial_events: pl.DataFrame = customer_subscription.select(
 #         [
