@@ -53,6 +53,7 @@ supabase_key = os.getenv("SUPABASE_KEY")
 #     # region ----- Selecionar Sub aleatório para Customers -----
 #     subscription_weights: list[float] = [0.7, 0.2, 0.1]
 #     billing_cycle_weights: list[float] = [0.7, 0.3]
+#     # endregion
 
 #     customer_subscription: pl.DataFrame = customers_df.with_columns(
 #         subscription_plan_id=pl.Series(
